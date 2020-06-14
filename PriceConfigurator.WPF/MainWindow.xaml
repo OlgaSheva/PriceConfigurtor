@@ -1,0 +1,74 @@
+﻿<Window x:Class="PriceConfigurator.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PriceConfigurator.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="1000">
+    <Window.Resources>
+        
+    </Window.Resources>
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.2*" />
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Column="0"
+                  Grid.Row="1"
+                  x:Name="gridProducts"
+                  ItemsSource="{Binding Products}"
+                  SelectedItem="{Binding SelectedProduct}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Марка" Binding="{Binding Mark}" />
+                <DataGridTextColumn Header="Код" Binding="{Binding Code}" />
+                <DataGridTextColumn Header="Производитель" Binding="{Binding Manufacturer}" />
+                <DataGridTextColumn Header="Поставщик" Binding="{Binding Provider}" />
+                <DataGridTextColumn Header="Цена без НДС, €" Binding="{Binding PriceWithoutVAT_EUR}" />
+                <DataGridTextColumn Header="Цена без НДС, BYN" Binding="{Binding PriceWithoutVAT_BYN}" />
+                <DataGridTextColumn Header="Дата цены" Binding="{Binding PriceLastUpdate, StringFormat='dd.MM.yyyy'}" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="0" Background="BlanchedAlmond" Padding="10">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="autoUpdate" IsChecked="{Binding IsPriceAutoUpdate}">
+                                    <TextBlock Text="Автоматическое обновление цены: " />                                    
+                                </CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="XPath цены продукта: " />
+                                <TextBox x:Name="autoUpdateXPath" Text="{Binding XPath}" IsEnabled="{Binding IsChecked, ElementName=autoUpdate}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+
+        <!--<StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Command="{Binding AddCommand}">+</Button>
+            <Button Command="{Binding RemoveCommand}"
+                    CommandParameter="{Binding SelectedProduct}">-</Button>
+            <Button Content="2x">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction
+                            Command="{Binding DoubleCommand}"
+                            CommandParameter="{Binding SelectedProduct}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>-->
+
+    </Grid>
+</Window>
