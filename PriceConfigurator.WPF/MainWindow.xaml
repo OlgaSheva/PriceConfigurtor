@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PriceConfigurator.WPF"
+        xmlns:local="clr-namespace:PriceConfigurator.Model;assembly=PriceConfigurator.Model"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="1000">
     <Window.Resources>
-        
+           
     </Window.Resources>
+    
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -21,11 +22,12 @@
             <RowDefinition Height="0.2*" />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Column="0"
+        <DataGrid x:Name="ProductsGrid" 
+                  Grid.Column="0"
                   Grid.Row="1"
-                  x:Name="gridProducts"
-                  ItemsSource="{Binding Products}"
-                  SelectedItem="{Binding SelectedProduct}">
+                  ItemsSource="{Binding GroupedProducts}"
+                  CanUserAddRows="True">
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Марка" Binding="{Binding Mark}" />
@@ -36,14 +38,57 @@
                 <DataGridTextColumn Header="Цена без НДС, BYN" Binding="{Binding PriceWithoutVAT_BYN}" />
                 <DataGridTextColumn Header="Дата цены" Binding="{Binding PriceLastUpdate, StringFormat='dd.MM.yyyy'}" />
             </DataGrid.Columns>
+            
+            <DataGrid.GroupStyle>                
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Path=Name}" />
+                                                    <TextBlock Text="{Binding Path=Items.Count}" Margin="20,0,20,0" />
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter>
+                                                
+                                            </ItemsPresenter>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <Border BorderThickness="0" Background="BlanchedAlmond" Padding="10">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Категория: " />
+                                <ComboBox x:Name="CategoryComboBox">
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
                                 <CheckBox x:Name="autoUpdate" IsChecked="{Binding IsPriceAutoUpdate}">
-                                    <TextBlock Text="Автоматическое обновление цены: " />                                    
+                                    <TextBlock Text="Автоматическое обновление цены: " />
                                 </CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="URL продукта: " />
+                                <TextBox x:Name="autoUpdateUrl" Text="{Binding Url}" IsEnabled="{Binding IsChecked, ElementName=autoUpdate}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="XPath цены продукта: " />
@@ -53,11 +98,12 @@
                     </Border>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
+
         </DataGrid>
 
-        <!--<StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Command="{Binding AddCommand}">+</Button>
-            <Button Command="{Binding RemoveCommand}"
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Click="Save_Button_Click" />
+            <!--<Button Command="{Binding RemoveCommand}"
                     CommandParameter="{Binding SelectedProduct}">-</Button>
             <Button Content="2x">
                 <i:Interaction.Triggers>
@@ -67,8 +113,8 @@
                             CommandParameter="{Binding SelectedProduct}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </Button>
-        </StackPanel>-->
+            </Button>-->
+        </StackPanel>
 
     </Grid>
 </Window>

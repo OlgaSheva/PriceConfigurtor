@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -7,11 +9,11 @@ namespace PriceConfigurator.Model
     /// <summary>
     /// Product category.
     /// </summary>
-    public class Category
+    public class Category : ObservableCollection<Product>, INotifyPropertyChanged
     {
         private int id;
         private string name;
-        private List<Product> productList;
+        //private ObservableCollection<Product> products;
 
         /// <summary>
         /// Category id.
@@ -39,17 +41,19 @@ namespace PriceConfigurator.Model
             }
         }
 
-        public List<Product> ProductList
-        {
-            get { return productList; }
-            set
-            {
-                productList = value;
-                OnPropertyChanged("ProductList");
-            }
-        }
+        //public ObservableCollection<Product> Products
+        //{
+        //    get { return products; }
+        //    set
+        //    {
+        //        products = value;
+        //        OnPropertyChanged("Products");
+        //    }
+        //}
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        // Implement INotifyPropertyChanged interface.
+        public event PropertyChangedEventHandler PropertyChanged;        
+
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
