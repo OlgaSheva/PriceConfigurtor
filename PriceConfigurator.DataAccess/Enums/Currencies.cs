@@ -1,4 +1,4 @@
-﻿namespace PriceConfigurator.Model
+﻿namespace PriceConfigurator.DataAccess
 {
     public enum Currencies
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PriceConfigurator.Model.Migrations
+namespace PriceConfigurator.DataAccess.Migrations
 {
     public partial class InitialCreate : Migration
     {

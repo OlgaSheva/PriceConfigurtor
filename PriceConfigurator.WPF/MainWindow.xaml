@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PriceConfigurator.Model;assembly=PriceConfigurator.Model"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="1000">
     <Window.Resources>
@@ -102,7 +101,7 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Click="Save_Button_Click" />
+            <!--<Button Click="Save_Button_Click" />-->
             <!--<Button Command="{Binding RemoveCommand}"
                     CommandParameter="{Binding SelectedProduct}">-</Button>
             <Button Content="2x">

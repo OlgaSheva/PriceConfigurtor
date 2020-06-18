@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
-using PriceConfigurator.Model;
-using PriceConfigurator.Model.Database;
+
+using PriceConfigurator.DataAccess.Models.CategoryModel;
+using PriceConfigurator.DataAccess.Models.ProductModel;
 
 namespace PriceConfigurator.WPF.ViewModels
 {
@@ -33,7 +32,7 @@ namespace PriceConfigurator.WPF.ViewModels
         //    }
         //}
 
-        public ProductViewModel(PriceConfiguratorContext context)
+        public ProductViewModel(IProductContext context)
         {
             context.Products.Add(new Product
             {
@@ -50,7 +49,7 @@ namespace PriceConfigurator.WPF.ViewModels
                 PriceWithoutVAT_BYN = 12.76m,
                 PriceLastUpdate = DateTime.Now
             });
-            context.SaveChanges();
+            context.SaveChangesAsync();
 
             context.Products.Add(new Product
             {
@@ -64,43 +63,12 @@ namespace PriceConfigurator.WPF.ViewModels
                 PriceWithoutVAT_BYN = 9.92m,
                 PriceLastUpdate = DateTime.Now
             });
-            context.SaveChanges();
+            context.SaveChangesAsync();
 
             Products = CollectionViewSource.GetDefaultView(context.Products.ToList());
 
             GroupedProducts = new ListCollectionView(context.Products.ToList());
-            GroupedProducts.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
-
-            //Products = new ObservableCollection<Product>
-            //{
-            //    new Product
-            //    {
-            //        ProductCategory = new Category { Name = "Выключатели" },
-            //        Name = "Выключатель автоматический PL6 С2, 1P",
-            //        Mark = "PL6-C2/1",
-            //        Code = "286528",
-            //        Manufacturer = "Eaton",
-            //        Provider = "lsys",
-            //        IsPriceAutoUpdate = true,
-            //        Url = "https://lsys.by/katalog/oborudovanie_dlya_ustanovki_na_din_reyku/avtomaticheskie_vyklyuchateli/avt_vyklyuchatel_pl6_c2_1_1p_2a_khar_ka_c_6ka_1m.html",
-            //        XPath = "//*[@class=\"prod__info__current-price\"]/span",
-            //        PriceWithoutVAT_EUR = 4.81m,
-            //        PriceWithoutVAT_BYN = 12.76m,
-            //        PriceLastUpdate = DateTime.Now
-            //    },
-            //    new Product
-            //    {
-            //        ProductCategory = new Category { Name = "Выключатели1" },
-            //        Name = "Выключатель автоматический PL7 С2, 1P",
-            //        Mark = "PL7-C2/1",
-            //        Code = "262699",
-            //        Manufacturer = "Eaton",
-            //        Provider = "lsys",
-            //        PriceWithoutVAT_EUR = 3.76m,
-            //        PriceWithoutVAT_BYN = 9.92m,
-            //        PriceLastUpdate = DateTime.Now
-            //    }
-            //};
+            GroupedProducts.GroupDescriptions.Add(new PropertyGroupDescription("Category"));            
         }
 
         ///// <summary>

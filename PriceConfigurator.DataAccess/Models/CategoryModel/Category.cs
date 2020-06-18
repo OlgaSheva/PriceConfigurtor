@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
+using PriceConfigurator.DataAccess.Models.ProductModel;
 
-namespace PriceConfigurator.Model
+namespace PriceConfigurator.DataAccess.Models.CategoryModel
 {
     /// <summary>
     /// Product category.
     /// </summary>
+    [Table("Category")]
     public class Category : ObservableCollection<Product>, INotifyPropertyChanged
     {
         private int id;

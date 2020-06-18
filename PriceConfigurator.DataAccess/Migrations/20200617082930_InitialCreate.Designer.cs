@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PriceConfigurator.Model.Database;
+using PriceConfigurator.DataAccess;
 
-namespace PriceConfigurator.Model.Migrations
+namespace PriceConfigurator.DataAccess.Migrations
 {
-    [DbContext(typeof(PriceConfiguratorContext))]
-    [Migration("20200616075206_InitialCreate")]
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20200617082930_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace PriceConfigurator.Model.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5");
 
-            modelBuilder.Entity("PriceConfigurator.Model.Category", b =>
+            modelBuilder.Entity("PriceConfigurator.DataAccess.Models.CategoryModel.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,7 +32,7 @@ namespace PriceConfigurator.Model.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("PriceConfigurator.Model.Product", b =>
+            modelBuilder.Entity("PriceConfigurator.DataAccess.Models.ProductModel.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,9 +87,9 @@ namespace PriceConfigurator.Model.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("PriceConfigurator.Model.Product", b =>
+            modelBuilder.Entity("PriceConfigurator.DataAccess.Models.ProductModel.Product", b =>
                 {
-                    b.HasOne("PriceConfigurator.Model.Product", null)
+                    b.HasOne("PriceConfigurator.DataAccess.Models.ProductModel.Product", null)
                         .WithMany("ProductCategory")
                         .HasForeignKey("ProductId");
                 });

@@ -1,12 +1,14 @@
 ﻿using CommonMark.Syntax;
-using PriceConfigurator.Model;
-using PriceConfigurator.Model.Database;
+using PerseusLibS.Workflow;
+using PriceConfigurator.DataAccess;
+using PriceConfigurator.DataAccess.Models.ProductModel;
 using PriceConfigurator.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,27 +28,28 @@ namespace PriceConfigurator.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindowViewModel ViewModel
+        {
+            set { DataContext = value; }
+        }
+
+        public MainWindow(IProductContext productContext)
         {
             InitializeComponent();
-
-            using var context = new PriceConfiguratorContext();
-            DataContext = new ProductViewModel(context);
-
-            context.Database.EnsureCreated();            
+            this.DataContext = new ProductViewModel(productContext);
         }  
         
-        public void Save_Button_Click(object sender, RoutedEventArgs e)
-        {
-            using var context = new PriceConfiguratorContext();            
-            foreach (var row in ProductsGrid.Items)
-            {
-                Product product = row as Product;
-                if (product != null)
-                {
+        //public void Save_Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    using var context = new PriceConfiguratorContext();            
+        //    foreach (var row in ProductsGrid.Items)
+        //    {
+        //        Product product = row as Product;
+        //        if (product != null)
+        //        {
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
     }
 }

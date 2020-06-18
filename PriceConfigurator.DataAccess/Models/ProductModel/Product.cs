@@ -1,9 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
+using PriceConfigurator.DataAccess.Models.CategoryModel;
 
-namespace PriceConfigurator.Model
+namespace PriceConfigurator.DataAccess.Models.ProductModel
 {
+    [Table("Product")]
     public class Product : INotifyPropertyChanged, IEditableObject
     {
         //const int PRICE_PRECISION = 2;

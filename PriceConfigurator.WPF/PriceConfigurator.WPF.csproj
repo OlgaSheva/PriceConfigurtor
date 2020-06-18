@@ -12,16 +12,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0-preview.5.20278.1" />
+    <PackageReference Include="PerseusLibS" Version="1.6.15.300" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="Unity" Version="5.11.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PriceConfigurator.Model\PriceConfigurator.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="product.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\PriceConfigurator.DataAccess\PriceConfigurator.DataAccess.csproj" />
+    <ProjectReference Include="..\PriceConfigurator.Services\PriceConfigurator.Services.csproj" />
   </ItemGroup>
 
 </Project>
