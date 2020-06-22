@@ -24,5 +24,10 @@ namespace PriceConfigurator.DataAccess
         {
             return DbSet.Remove(entity).Entity;
         }
+
+        public override void RemoveRange(params TEntity[] entities)
+        {
+            DbSet.RemoveRange(entities);
+        }
     }
 }

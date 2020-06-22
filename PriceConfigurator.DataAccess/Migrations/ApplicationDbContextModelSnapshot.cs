@@ -2,17 +2,15 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PriceConfigurator.DataAccess;
 
 namespace PriceConfigurator.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200617082930_InitialCreate")]
-    partial class InitialCreate
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +20,12 @@ namespace PriceConfigurator.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsUpdated")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -41,13 +45,19 @@ namespace PriceConfigurator.DataAccess.Migrations
                     b.Property<string>("Category")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Code")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool?>("IsPriceAutoUpdate")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool?>("IsUpdated")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Manufacturer")

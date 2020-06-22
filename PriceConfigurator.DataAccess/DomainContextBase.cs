@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -23,6 +24,10 @@ namespace PriceConfigurator.DataAccess
         public async Task<int> SaveChangesAsync() => await _dbContext.SaveChangesAsync();
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken) => await _dbContext.SaveChangesAsync(cancellationToken);
+
+        public void RemoveRange(params object[] entities) => _dbContext.RemoveRange(entities);
+
+        public void RemoveRange(IEnumerable<object> entities) => _dbContext.RemoveRange(entities);
 
         protected IEntitySet<TEntityType> GetDbSet<TEntityType>()
             where TEntityType : class

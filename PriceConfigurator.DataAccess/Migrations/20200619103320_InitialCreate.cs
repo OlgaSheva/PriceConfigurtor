@@ -13,7 +13,9 @@ namespace PriceConfigurator.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsUpdated = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,9 +38,11 @@ namespace PriceConfigurator.DataAccess.Migrations
                     IsPriceAutoUpdate = table.Column<bool>(nullable: true),
                     Url = table.Column<string>(nullable: true),
                     XPath = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: true),
                     Category = table.Column<string>(nullable: true),
                     PriceLastUpdate = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: true),
+                    IsUpdated = table.Column<bool>(nullable: true),
                     ProductId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

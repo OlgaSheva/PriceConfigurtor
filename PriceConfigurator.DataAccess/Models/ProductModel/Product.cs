@@ -6,7 +6,7 @@ using PriceConfigurator.DataAccess.Models.CategoryModel;
 
 namespace PriceConfigurator.DataAccess.Models.ProductModel
 {
-    [Table("Product")]
+    //[Table("Products")]
     public class Product : INotifyPropertyChanged, IEditableObject
     {
         //const int PRICE_PRECISION = 2;
@@ -24,19 +24,21 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
         private string _url;
         private string _xPath;
         private Category _productCategory;
+        private bool? _isDeleted;
+        private bool? _isUpdated;
 
         // Data for undoing canceled edits.
         private Product temp_Product = null;
         private bool m_Editing = false;
 
         public int Id
-        { 
+        {
             get { return _id; }
             set
             {
                 _id = value;
                 OnPropertyChanged("Id");
-            } 
+            }
         }
 
         public string Name
@@ -47,7 +49,7 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                 if (value != _name)
                 {
                     _name = value;
-                    OnPropertyChanged("Name"); 
+                    OnPropertyChanged("Name");
                 }
             }
         }
@@ -60,7 +62,7 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                 if (value != _mark)
                 {
                     _mark = value;
-                    OnPropertyChanged("Mark"); 
+                    OnPropertyChanged("Mark");
                 }
             }
         }
@@ -73,7 +75,7 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                 if (value != _code)
                 {
                     _code = value;
-                    OnPropertyChanged("Code"); 
+                    OnPropertyChanged("Code");
                 }
             }
         }
@@ -86,7 +88,7 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                 if (value != _manufacturer)
                 {
                     _manufacturer = value;
-                    OnPropertyChanged("Manufacturer"); 
+                    OnPropertyChanged("Manufacturer");
                 }
             }
         }
@@ -99,7 +101,7 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                 if (value != _provider)
                 {
                     _provider = value;
-                    OnPropertyChanged("Provider"); 
+                    OnPropertyChanged("Provider");
                 }
             }
         }
@@ -109,11 +111,9 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
             get { return _priceEUR; }
             set
             {
-                if (_priceEUR == null || Decimal.Compare((decimal)value, (decimal)_priceEUR) != 0)
-                {
-                    _priceEUR = value;
-                    OnPropertyChanged("PriceWithoutVAT_EUR"); 
-                }
+                _priceEUR = value;
+                _priceLastUpdate = DateTime.Now;
+                OnPropertyChanged("PriceWithoutVAT_EUR");
             }
         }
 
@@ -122,11 +122,9 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
             get { return _priceBYN; }
             set
             {
-                if (_priceBYN == null || Decimal.Compare((decimal)value, (decimal)_priceBYN) != 0)
-                {
-                    _priceBYN = value;
-                    OnPropertyChanged("PriceWithoutVAT_BYN"); 
-                }
+                _priceBYN = value;
+                _priceLastUpdate = DateTime.Now;
+                OnPropertyChanged("PriceWithoutVAT_BYN");
             }
         }
 
@@ -138,7 +136,7 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                 if (value != _isPriceAutoUpdate)
                 {
                     _isPriceAutoUpdate = value;
-                    OnPropertyChanged("IsPriceAutoUpdate"); 
+                    OnPropertyChanged("IsPriceAutoUpdate");
                 }
             }
         }
@@ -151,7 +149,7 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                 if (value != _url)
                 {
                     _url = value;
-                    OnPropertyChanged("Url"); 
+                    OnPropertyChanged("Url");
                 }
             }
         }
@@ -164,15 +162,15 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                 if (value != _xPath)
                 {
                     _xPath = value;
-                    OnPropertyChanged("XPath"); 
+                    OnPropertyChanged("XPath");
                 }
             }
         }
 
         /// <summary>
-        /// Product ctegory id.
+        /// Product category id.
         /// </summary>
-        public int CategoryId { get; private set; }
+        public int? CategoryId { get; private set; }
 
         /// <summary>
         /// Product category name.
@@ -192,10 +190,10 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
                     _productCategory = value;
                     this.Category = value.Name;
                     this.CategoryId = value.Id;
-                    OnPropertyChanged("ProductCategory"); 
+                    OnPropertyChanged("ProductCategory");
                 }
             }
-        }        
+        }
 
         public DateTime? PriceLastUpdate
         {
@@ -205,6 +203,38 @@ namespace PriceConfigurator.DataAccess.Models.ProductModel
             {
                 _priceLastUpdate = value;
                 OnPropertyChanged("PriceLastUpdate");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a product is deleted.
+        /// </summary>
+        public bool? IsDeleted
+        {
+            get { return _isDeleted ?? false; }
+            set
+            {
+                if (_isDeleted != value)
+                {
+                    _isDeleted = value;
+                    OnPropertyChanged("IsDeleted");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a product is updated.
+        /// </summary>
+        public bool? IsUpdated
+        {
+            get { return _isUpdated ?? false; }
+            set
+            {
+                if (_isUpdated != value)
+                {
+                    _isUpdated = value;
+                    OnPropertyChanged("IsUpdated");
+                }
             }
         }
 

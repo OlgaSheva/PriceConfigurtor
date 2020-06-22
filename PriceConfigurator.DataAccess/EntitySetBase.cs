@@ -28,5 +28,7 @@ namespace PriceConfigurator.DataAccess
         public abstract TEntity Add(TEntity entity);
 
         public abstract TEntity Remove(TEntity entity);
+
+        public abstract void RemoveRange(params TEntity[] entities);
     }
 }

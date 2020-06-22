@@ -77,8 +77,10 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Категория: " />
-                                <ComboBox x:Name="CategoryComboBox">
-                                </ComboBox>
+                                <TextBlock x:Name="productCategory" Text="{Binding Category}"></TextBlock>
+                                <!--<ComboBox x:Name="CategoryComboBox"
+                                          ItemsSource="{Binding Path=CategoryNames}">
+                                </ComboBox>-->
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox x:Name="autoUpdate" IsChecked="{Binding IsPriceAutoUpdate}">
@@ -101,6 +103,7 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Click="Add_Category_Click">+ Kатегория</Button>
             <!--<Button Click="Save_Button_Click" />-->
             <!--<Button Command="{Binding RemoveCommand}"
                     CommandParameter="{Binding SelectedProduct}">-</Button>

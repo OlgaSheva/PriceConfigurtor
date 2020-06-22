@@ -22,5 +22,11 @@ namespace PriceConfigurator.DataAccess
         /// <param name="entity">An entity to remove.</param>
         /// <returns>Removed entity.</returns>
         TEntity Remove(TEntity entity);
+
+        /// <summary>
+        /// Removes the existed entities from the set.
+        /// </summary>
+        /// <param name="entities">Antities to remove.</param>
+        void RemoveRange(params TEntity[] entities);
     }
 }

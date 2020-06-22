@@ -11,7 +11,7 @@ namespace PriceConfigurator.DataAccess
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ApplicationDbContext>().SingleInstance().InstancePerLifetimeScope();
+            builder.RegisterType<ApplicationDbContext>().SingleInstance();
             builder.RegisterType<ProductContext>().As<IProductContext>();
             builder.RegisterType<CategoryContext>().As<ICategoryContext>();
         }

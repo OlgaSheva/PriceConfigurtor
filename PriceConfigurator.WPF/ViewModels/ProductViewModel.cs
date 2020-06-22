@@ -1,145 +1,134 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Data;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.ComponentModel;
+//using System.Linq;
+//using System.Runtime.CompilerServices;
+//using System.Windows.Data;
 
-using PriceConfigurator.DataAccess.Models.CategoryModel;
-using PriceConfigurator.DataAccess.Models.ProductModel;
+//using PriceConfigurator.DataAccess.Models.CategoryModel;
+//using PriceConfigurator.DataAccess.Models.ProductModel;
+//using PriceConfigurator.Services.ProductManagement;
 
-namespace PriceConfigurator.WPF.ViewModels
-{
-    public class ProductViewModel : INotifyPropertyChanged
-    {
-        //private Product selectedProduct;
-        //private RelayCommand addCommand;
-        //private RelayCommand removeCommand;
-        //private RelayCommand doubleCommand;
+//namespace PriceConfigurator.WPF.ViewModels
+//{
+//    internal class ProductViewModel : INotifyPropertyChanged
+//    {
+//        private IProductService _service;
+//        private Product _selectedProduct;
 
-        //public ObservableCollection<Product> Products { get; set; }
+//        private AsyncCommand<List<Product>> _getCommand;
+//        private AsyncCommand<Product> _addCommand;
+//        private AsyncCommand<Product> _removeCommand;
 
-        public ICollectionView Products { get; private set; }
+//        public ProductViewModel(IProductService productService)
+//        {
+//            _service = productService ?? throw new ArgumentNullException(nameof(productService));
+//            //context.Products.Add(new Product
+//            //{
+//            //    ProductCategory = new Category { Id = 1, Name = "Выключатели" },
+//            //    Name = "Выключатель автоматический PL6 С2, 1P",
+//            //    Mark = "PL6-C2/1",
+//            //    Code = "286528",
+//            //    Manufacturer = "Eaton",
+//            //    Provider = "lsys",
+//            //    IsPriceAutoUpdate = true,
+//            //    Url = "https://lsys.by/katalog/oborudovanie_dlya_ustanovki_na_din_reyku/avtomaticheskie_vyklyuchateli/avt_vyklyuchatel_pl6_c2_1_1p_2a_khar_ka_c_6ka_1m.html",
+//            //    XPath = "//*[@class=\"prod__info__current-price\"]/span",
+//            //    PriceWithoutVAT_EUR = 4.81m,
+//            //    PriceWithoutVAT_BYN = 12.76m,
+//            //    PriceLastUpdate = DateTime.Now
+//            //});
+//            //context.SaveChangesAsync();
 
-        public ICollectionView GroupedProducts { get; private set; }
+//            //context.Products.Add(new Product
+//            //{
+//            //    ProductCategory = new Category { Id = 2, Name = "Выключатели" },
+//            //    Name = "Выключатель автоматический PL7 С2, 1P",
+//            //    Mark = "PL7-C2/1",
+//            //    Code = "262699",
+//            //    Manufacturer = "Eaton",
+//            //    Provider = "lsys",
+//            //    PriceWithoutVAT_EUR = 3.76m,
+//            //    PriceWithoutVAT_BYN = 9.92m,
+//            //    PriceLastUpdate = DateTime.Now
+//            //});
+//            //context.SaveChangesAsync();
 
-        //public Product SelectedProduct
-        //{
-        //    get { return selectedProduct; }
-        //    set
-        //    {
-        //        selectedProduct = value;
-        //        OnPropertyChanged("SelectedProduct");
-        //    }
-        //}
+//            //Products = CollectionViewSource.GetDefaultView(context.Products.ToList());
 
-        public ProductViewModel(IProductContext context)
-        {
-            context.Products.Add(new Product
-            {
-                ProductCategory = new Category { Id=1, Name = "Выключатели" },
-                Name = "Выключатель автоматический PL6 С2, 1P",
-                Mark = "PL6-C2/1",
-                Code = "286528",
-                Manufacturer = "Eaton",
-                Provider = "lsys",
-                IsPriceAutoUpdate = true,
-                Url = "https://lsys.by/katalog/oborudovanie_dlya_ustanovki_na_din_reyku/avtomaticheskie_vyklyuchateli/avt_vyklyuchatel_pl6_c2_1_1p_2a_khar_ka_c_6ka_1m.html",
-                XPath = "//*[@class=\"prod__info__current-price\"]/span",
-                PriceWithoutVAT_EUR = 4.81m,
-                PriceWithoutVAT_BYN = 12.76m,
-                PriceLastUpdate = DateTime.Now
-            });
-            context.SaveChangesAsync();
+//            GroupedProducts = new ListCollectionView(_service.GetProductsAsync().Result);
+//            GroupedProducts.GroupDescriptions.Add(new PropertyGroupDescription("Category"));            
+//        }
 
-            context.Products.Add(new Product
-            {
-                ProductCategory = new Category { Id=2, Name = "Выключатели" },
-                Name = "Выключатель автоматический PL7 С2, 1P",
-                Mark = "PL7-C2/1",
-                Code = "262699",
-                Manufacturer = "Eaton",
-                Provider = "lsys",
-                PriceWithoutVAT_EUR = 3.76m,
-                PriceWithoutVAT_BYN = 9.92m,
-                PriceLastUpdate = DateTime.Now
-            });
-            context.SaveChangesAsync();
+//        //public ICollectionView Products { get; private set; }
 
-            Products = CollectionViewSource.GetDefaultView(context.Products.ToList());
+//        public ICollectionView GroupedProducts { get; private set; }
 
-            GroupedProducts = new ListCollectionView(context.Products.ToList());
-            GroupedProducts.GroupDescriptions.Add(new PropertyGroupDescription("Category"));            
-        }
+//        public Product SelectedProduct
+//        {
+//            get { return _selectedProduct; }
+//            set
+//            {
+//                _selectedProduct = value;
+//                OnPropertyChanged("SelectedProduct");
+//            }
+//        }
 
-        ///// <summary>
-        ///// Add product command.
-        ///// </summary>
-        //public RelayCommand AddCommand
-        //{
-        //    get
-        //    {
-        //        return addCommand ??
-        //          (addCommand = new RelayCommand(obj =>
-        //          {
-        //              Product product = new Product();
-        //              Products.Insert(0, product);
-        //              SelectedProduct = product;
-        //          }));
-        //    }
-        //}
+//        public AsyncCommand<List<Product>> GetCommand
+//        {
+//            get
+//            {
+//                return _getCommand ??
+//                    (_getCommand = new AsyncCommand<List<Product>>(async (c) =>
+//                    {
+//                        await _service.GetProductsAsync();
+//                    }));
+//            }
+//        }
 
-        ///// <summary>
-        ///// Remove product command.
-        ///// </summary>
-        //public RelayCommand RemoveCommand
-        //{
-        //    get
-        //    {
-        //        return removeCommand ??
-        //          (removeCommand = new RelayCommand(obj =>
-        //          {
-        //              Product product = obj as Product;
-        //              if (product != null)
-        //              {
-        //                  Products.Remove(product);
-        //              }
-        //          },
-        //         (obj) => Products.Count > 0));
-        //    }
-        //}
+//        ///// <summary>
+//        ///// Add product command.
+//        ///// </summary>
+//        //public RelayCommand AddCommand
+//        //{
+//        //    get
+//        //    {
+//        //        return addCommand ??
+//        //          (addCommand = new RelayCommand(obj =>
+//        //          {
+//        //              Product product = new Product();
+//        //              Products.Insert(0, product);
+//        //              SelectedProduct = product;
+//        //          }));
+//        //    }
+//        //}
 
-        //public RelayCommand DoubleCommand
-        //{
-        //    get
-        //    {
-        //        return doubleCommand ??= new RelayCommand(obj =>
-        //        {
-        //            Product product = obj as Product;
-        //            if (product != null)
-        //            {
-        //                Product productCopy = new Product
-        //                {
-        //                    Name = product.Name,
-        //                    Mark = product.Mark,
-        //                    Code = product.Code,
-        //                    Manufacturer = product.Manufacturer,
-        //                    Provider = product.Provider,
-        //                    PriceWithoutVAT_EUR = product.PriceWithoutVAT_EUR,
-        //                    PriceWithoutVAT_BYN = product.PriceWithoutVAT_BYN,
-        //                    PriceLastUpdate = DateTime.Now
-        //                };
-        //                Products.Insert(0, productCopy);
-        //            }
-        //        });
-        //    }
-        //}
+//        ///// <summary>
+//        ///// Remove product command.
+//        ///// </summary>
+//        //public RelayCommand RemoveCommand
+//        //{
+//        //    get
+//        //    {
+//        //        return removeCommand ??
+//        //          (removeCommand = new RelayCommand(obj =>
+//        //          {
+//        //              Product product = obj as Product;
+//        //              if (product != null)
+//        //              {
+//        //                  Products.Remove(product);
+//        //              }
+//        //          },
+//        //         (obj) => Products.Count > 0));
+//        //    }
+//        //}
 
-        // Implement INotifyPropertyChanged interface.
-        public event PropertyChangedEventHandler PropertyChanged;
+//        // Implement INotifyPropertyChanged interface.
+//        public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-    }
-}
+//        public void OnPropertyChanged([CallerMemberName] string prop = "")
+//        {
+//            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+//        }
+//    }
+//}

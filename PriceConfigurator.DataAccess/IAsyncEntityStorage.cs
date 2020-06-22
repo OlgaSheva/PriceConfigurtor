@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PriceConfigurator.DataAccess
@@ -8,9 +9,5 @@ namespace PriceConfigurator.DataAccess
         Task<int> SaveChangesAsync();
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-
-        //void RemoveRange(params object[] entities);
-
-        //void RemoveRange(IEnumerable<object> entities);
     }
 }

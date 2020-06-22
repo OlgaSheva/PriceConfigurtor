@@ -1,8 +1,5 @@
 ﻿using CommonMark.Syntax;
 using PerseusLibS.Workflow;
-using PriceConfigurator.DataAccess;
-using PriceConfigurator.DataAccess.Models.ProductModel;
-using PriceConfigurator.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +18,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using PriceConfigurator.Services.CategoryManagement;
+using PriceConfigurator.Services.ProductManagement;
+using PriceConfigurator.WPF.ViewModels;
+using PriceConfigurator.DataAccess.Models.CategoryModel;
+
 namespace PriceConfigurator.WPF
 {
     /// <summary>
@@ -28,28 +30,32 @@ namespace PriceConfigurator.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindowViewModel ViewModel
+        private readonly ICategoryService _categoryService;
+
+        public MainWindow(IProductService productService, ICategoryService categoryService)
         {
-            set { DataContext = value; }
+            _categoryService = categoryService;
+
+            InitializeComponent();
+
+            this.DataContext = new MainWindowViewModel(productService, categoryService);
         }
 
-        public MainWindow(IProductContext productContext)
+        private void Add_Category_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-            this.DataContext = new ProductViewModel(productContext);
-        }  
-        
-        //public void Save_Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    using var context = new PriceConfiguratorContext();            
-        //    foreach (var row in ProductsGrid.Items)
-        //    {
-        //        Product product = row as Product;
-        //        if (product != null)
-        //        {
+            CategoryWindow category = new CategoryWindow(_categoryService);
 
-        //        }
-        //    }
+            if (category.ShowDialog() == true)
+            {
+                MessageBox.Show("Категория добавлена");
+            }
+        }
+
+        //private void ComboBox_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    var comboBox = sender as ComboBox;
+        //    comboBox.ItemsSource = CategoryNames;
+        //    comboBox.SelectedIndex = 0;
         //}
     }
 }

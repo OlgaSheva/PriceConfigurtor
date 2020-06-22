@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PriceConfigurator.DataAccess.Models.CategoryModel;
 using PriceConfigurator.DataAccess.Models.ProductModel;
+using System;
 
 namespace PriceConfigurator.DataAccess
 {
     /// <summary>
     /// Represents an application database context.
     /// </summary>
-    public sealed class ApplicationDbContext : DbContext
+    internal sealed class ApplicationDbContext : DbContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
@@ -22,6 +23,6 @@ namespace PriceConfigurator.DataAccess
         public DbSet<Product> Products { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=price_configurator.db");
+            => options.UseSqlite($"Data Source={AppContext.BaseDirectory}/price_configurator.db");
     }
 }
